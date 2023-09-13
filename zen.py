@@ -135,9 +135,80 @@ class Lexer:
         
 
 
+## nodes
+class NumberNode:
+    def __init__(self, tok):
+        self.tok = tok
+        
+    def __repr__(self):
+        return f'{self.tok}'
+    
+class BinOpNode:
+    def __init__(self, left_node, op_tok, right_node):
+        self.left_node = left_node
+        self.op_tok = op_tok
+        self.right_node = right_node
+        
+    def __repr__(self):
+        return f'({self.left_node}, {self.op_tok}, {self.right_node})'
+    
+## parser
+class Parser:
+    def __init__(self, tokens):
+        self.tokens = tokens
+        self.tok_index = -1
+        self.advanceNext()
+        
+    def advanceNext(self):
+        self.tok_index += 1
+        if self.tok_index < len(self.tokens):
+            self.current_tok = self.tokens[self.tok_index]
+        return self.current_tok
+
+########################################################
+    def parse(self):
+        res = self.expr()
+        return res
+
+    def factor(self):
+        tok = self.current_tok
+        if tok.type in (TT_INT, TT_FLOAT):
+            self.advanceNext()
+            return NumberNode(tok)
+        
+    def term(self):
+        return self.bin_op(self.factor, (TT_MUL, TT_DIV))
+    
+    def expr(self):
+        return self.bin_op(self.term, (TT_PLUS, TT_MINUS))
+    
+    def bin_op(self, func, ops):
+        left = func()
+        while self.current_tok.type in ops:
+            op_tok = self.current_tok
+            self.advanceNext()
+            right = func()
+            left = BinOpNode(left, op_tok, right)
+        return left 
+
+
+
+
         
 ## run
 def run(filename, text):
+    
+    
+    
+    ##### Genrate tokens #####
     lexer = Lexer(filename, text)
     tokens, error = lexer.make_tokens()
-    return tokens, error 
+    if error: return None, error
+    ##### Generate AST #####
+    parser = Parser(tokens)
+    abstract_syntax_tree = parser.parse()
+    
+    return abstract_syntax_tree, None
+
+
+    
