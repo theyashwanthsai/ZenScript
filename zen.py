@@ -1,8 +1,12 @@
-## constants
+########################################################
+#                       constants                      #
+########################################################
 DIGITS = '0123456789'
 
-## error
 
+########################################################
+#                       error                          #
+########################################################
 class Error:
     def __init__(self, pos_start, pos_end, error_name, details):
         self.error_name = error_name
@@ -22,8 +26,9 @@ class IllegalCharError(Error):
 
 
 
-## position
-
+########################################################
+#                       position                      #
+########################################################
 class Position:
     def __init__(self, index, line, column, filename, filetext):
         self.index = index
@@ -48,7 +53,10 @@ class Position:
 
 
 
-## tokens
+
+########################################################
+#                       tokens                         #
+########################################################
 TT_INT = 'INT'
 TT_FLOAT = 'FLOAT'
 TT_PLUS = 'PLUS'
@@ -68,8 +76,10 @@ class Token:
         return f'{self.type}'
     
     
-## lexer
 
+########################################################
+#                       lexer                          #
+########################################################
 class Lexer:
     def __init__(self, filename, text):
         self.filename = filename
@@ -135,7 +145,9 @@ class Lexer:
         
 
 
-## nodes
+########################################################
+#                       nodes                          #
+########################################################
 class NumberNode:
     def __init__(self, tok):
         self.tok = tok
@@ -152,7 +164,10 @@ class BinOpNode:
     def __repr__(self):
         return f'({self.left_node}, {self.op_tok}, {self.right_node})'
     
-## parser
+
+########################################################
+#                       parser                         #
+########################################################
 class Parser:
     def __init__(self, tokens):
         self.tokens = tokens
@@ -195,7 +210,10 @@ class Parser:
 
 
         
-## run
+
+########################################################
+#                       run                            #
+########################################################
 def run(filename, text):
     
     
