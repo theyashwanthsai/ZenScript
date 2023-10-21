@@ -173,6 +173,9 @@ class NumberNode:
     def __init__(self, tok):
         self.tok = tok
         
+        self.pos_start = self.tok.pos_start
+        self.pos_end = self.tok.pos_end
+        
     def __repr__(self):
         return f'{self.tok}'
     
@@ -182,6 +185,9 @@ class BinOpNode:
         self.op_tok = op_tok
         self.right_node = right_node
         
+        self.pos_start = self.left_node.pos_start
+        self.pos_end = self.right_node.pos_end
+        
     def __repr__(self):
         return f'({self.left_node}, {self.op_tok}, {self.right_node})'
     
@@ -189,6 +195,9 @@ class UnaryOpNode:
     def __init__(self, op_tok, right_node):
         self.op_tok = op_tok
         self.right_node = right_node
+        
+        self.pos_start = self.op_tok.pos_start
+        self.pos_end = right_node .pos_end
         
     def __repr__(self):
         return f'({self.op_tok}, {self.right_node})'
@@ -293,7 +302,41 @@ class Parser:
 
 
 ########################################################
-#                       Interpreter                    #
+#                       Values                         #
+########################################################
+
+class Number:
+    def __init__(self, value):
+        self.value = value
+        self.set_pos()
+        
+    def set_pos(self, pos_start = None, pos_end = None):
+        self.pos_start = pos_start
+        self.pos_end = pos_end
+        return self
+    
+    def added_to(self, other):
+        if isinstance(other, Number):
+            return Number(self.value + other.value)
+        
+    def subbed_by(self, other):
+        if isinstance(other, Number):
+            return Number(self.value - other.value)
+        
+    def multiplied_by(self, other):
+        if isinstance(other, Number):
+            return Number(self.value * other.value)
+        
+    def divided_by(self, other):
+        if isinstance(other, Number):
+            return Number(self.value / other.value)
+    
+    def __repr__(self):
+        return str(self.value)
+    
+
+########################################################
+#                     Interpreter                      #
 ########################################################
 
 class Interpreter:
@@ -308,16 +351,35 @@ class Interpreter:
 ###################################################
 
     def visit_NumberNode(self, node):
-        print("numbernode ")
+        # print("numbernode ")
+        return Number(node.tok.value).set_pos(node.pos_start, node.pos_end)
 
     def visit_BinOpNode(self, node):
-        print("binarynode ")
-        self.visit(node.left_node)
-        self.visit(node.right_node)
+        # print("binarynode ")
+        l = self.visit(node.left_node)
+        r = self.visit(node.right_node)
+        if node.op_tok.type == TT_PLUS:
+            result = l.added_to(r)
+            
+        elif node.op_tok.type == TT_MINUS:
+            result = l.subbed_by(r)
         
+        elif node.op_tok.type == TT_MUL:
+            result = l.multiplied_by(r)
+            
+        elif node.op_tok.type == TT_DIV:
+            result = l.divided_by(r)
+            
+        return result.set_pos(node.pos_start, node.pos_end)
+            
     def visit_UnaryOpNode(self, node):
-        print("Unarynode ")
-        self.visit(node.right_node)
+        # print("Unarynode ")
+        number = self.visit(node.right_node)
+        
+        if node.op_tok.type == TT_MINUS:
+            number = number.multiplied_by(Number(-1))
+        
+        return number.set_pos(node.pos_start, node.pos_end)
 
 
 ########################################################
@@ -339,7 +401,7 @@ def run(filename, text):
     
     ##### Run the program #####
     interpreter = Interpreter()
-    interpreter.visit(abstract_syntax_tree.node)
+    result = interpreter.visit(abstract_syntax_tree.node)
     
     
-    return None, None
+    return result, None
