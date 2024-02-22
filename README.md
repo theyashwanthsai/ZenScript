@@ -34,7 +34,9 @@ The project is organized into separate modules for different functionality:
 ## Images
 
 
-
+## Todo
+- [ ] Assignment operator (->)
+- [ ] Print function like cout 
 
 ## References:
 
