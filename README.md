@@ -1,6 +1,6 @@
 # ZenScript
 Building my own programming language using Python - To understand more about interpreters, and compilers. It includes a lexer to tokenize the input code and provide error handling for illegal characters.
-
+Zenscript is a dynamically types interpreted language written in python.
 ## Table of Contents
 - [Project Structure](#project-structure)
 - [How to Use](#how-to-use)
@@ -23,20 +23,19 @@ The project is organized into separate modules for different functionality:
 
 1. Clone or download the project to your local machine.
 
-2. Ensure you have Python installed (version 3.7 or later).
+2. Ensure you have Python installed.
 
 3. Run the shell.py file. ``` python3 shell.py ```
 
 
 ## Examples
->ToDo
-
-## Images
-
+#### Images
+![demo](demo.png)
 
 ## Todo
-- [ ] Assignment operator (->)
-- [ ] Print function like cout 
+- [ ] If-Else statements
+- [ ] Adding functions
+- [ ] Write documentation
 
 ## References:
 
