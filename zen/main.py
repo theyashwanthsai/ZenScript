@@ -6,7 +6,7 @@ from tokens import Token
 from errors import Error, IllegalCharError
 def run(fn, text):
     
-    
+    # todo: Make chamges in main 
     
     ##### Genrate tokens #####
     # lexer = Lexer(filename, text)
