@@ -6,9 +6,8 @@ from tokens import Token, TT_INT, TT_FLOAT, TT_PLUS, TT_MINUS, TT_MUL, TT_DIV, T
 from errors import Error, IllegalCharError
 from position import Position
 
-# todo: add help
 
-# todo: Make changes to parser
+# todo: Make changes to the interpreter
 class Lexer:
     def __init__(self, filename, text):
         self.filename = filename
