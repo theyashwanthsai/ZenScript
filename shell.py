@@ -12,4 +12,4 @@ while True:
 # todo: create a new method in lexer.
 # todo: Make changes
 # todo: update in lexer, parser, etc
-# todo: make changes in interpreter
+# todo: add support for lee
