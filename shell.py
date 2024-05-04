@@ -10,3 +10,4 @@ while True:
         print(result)
 
 # todo: Add spell for making functions
+# todo: Add if else statement
