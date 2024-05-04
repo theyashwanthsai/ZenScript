@@ -8,3 +8,5 @@ while True:
         print(error.as_string())
     else:
         print(result)
+
+# todo: Add spell for making functions
