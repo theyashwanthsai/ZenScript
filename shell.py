@@ -9,9 +9,4 @@ while True:
     else:
         print(result)
 
-# todo: Add spell for making functions
-# todo: Add if else statement
-# todo: todo make compile
-# todo: Add new stuff
-# todo: make changes here
-# todo: add an option for compiled changes
+# todo: create a new method in lexer.
