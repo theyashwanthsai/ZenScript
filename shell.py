@@ -11,3 +11,4 @@ while True:
 
 # todo: Add spell for making functions
 # todo: Add if else statement
+# todo: todo make compile
